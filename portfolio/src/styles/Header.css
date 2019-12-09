@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+
+.MenuItem{
+    height : 3.5rem;
+    width : 20vw;
+    background-color : #343a40;
+    border : none;
+    cursor: pointer;
+    outline : none;
+    color : white;
+    font-family : 'Roboto Slab', serif;
+    font-size : 2rem;
+}
+
+.MenuItem:hover{
+    background-color : #495057;
+}
+
+.MenuItem:active{
+    background-color : #1862ab;
+}
