@@ -1,12 +1,17 @@
 /* eslint-disable react/jsx-pascal-case */
 import React, { Fragment } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import Popup from 'reactjs-popup';
+import axios from 'axios';
+import { SERVER } from '../config/config.json';
+
 import { IconButton } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faRocket, faBold } from '@fortawesome/free-solid-svg-icons';
+import { faRocket, faBold, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faFacebook } from '@fortawesome/free-brands-svg-icons';
 import { faEdit } from '@fortawesome/free-regular-svg-icons';
-import Profile_img from '../images/profile.jpg';
+import Profile_img from '../images/profile2.jpg';
+import ProfilePopup from '../popup/ProfilePopup';
 
 const GlobalStyle = createGlobalStyle`
     body{
@@ -15,11 +20,11 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Profile_Tab = styled.div`
-    width : 50%;
-    height : 65%;
+    width : 960px;
+    height : 550px;
     background-color : white;
     display : flex;
-    flex-direction : column;
+    flex-direction : column; 
     outline : #d7d7d7 solid 1px;
     box-shadow : 2px 2px 2px 2px gray;
 `;
@@ -58,8 +63,7 @@ const Img_Box = styled.div`
 `;
 
 const Text = styled.span`
-    @import url('https://fonts.googleapis.com/css?family=Bebas+Neue|Solway&display=swap');
-    @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Bebas+Neue|Noto+Sans+KR|Solway&display=swap');
 `;
 
 const NameText = styled(Text)`
@@ -90,52 +94,79 @@ const MenuItem = styled.li`
 `;
 
 class Profile extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            profile : [],
+        }
+    }
+
+    getProfile(){
+        axios.get(`${SERVER}/profile`)
+        .then((response) => {
+            this.setState({
+                profile : response.data[0],
+            });
+        })
+        .catch((error) => {
+            console.log("fail");
+        })
+    };
+
+    componentWillMount(){
+        this.getProfile();
+    }
+
     render(){
         return(
             <Fragment>
                 <GlobalStyle />
                 <Profile_Tab>
                     <Top_Box>
-                        <IconButton style = {{position : "absolute", top : "0px", right : "0px", color : "white"}}>
-                            <FontAwesomeIcon icon={faEdit} />
+                        <Popup modal trigger={
+                            <IconButton style = {{position : "absolute", top : "0px", right : "0px", color : "black"}} >
+                                <FontAwesomeIcon icon={faEdit} />
+                            </IconButton>
+                        }>{close => <ProfilePopup close={close} getProfile = {() => this.getProfile()} />}</Popup>
+                        <IconButton onClick = {this.props.onShowSkill} style = {{position : "absolute", top : "0px", left : "0px", color : "black"}}>
+                            <FontAwesomeIcon icon = {faChartLine} />
                         </IconButton>
-                        
                         <Left_Box>
                             <Img_Box><img src = { Profile_img } alt = "Profile Image" style = {{ width : "100%", height : "100%" }} /></Img_Box>
                         </Left_Box>
 
                         <Right_Box>
-                            <NameText>{'황대성(Dae-Seong Hwang)'}</NameText>
-                            <span style = {{fontSize : "20px"}}>{'Front-end-Developer'}</span>
+                            <NameText>{`${this.state.profile.korean}(${this.state.profile.english})`}</NameText>
+                            <span style = {{fontSize : "20px"}}>{`${this.state.profile.client}`}</span>
                             <hr style={{ backgroundColor : "black", width : "90%", height : "1px", marginLeft : "0"}} />
                             <ul style = {{ paddingLeft : "0"}}>
-                                <MenuItem><TitleText>Age</TitleText><InforText>18</InforText></MenuItem>
-                                <MenuItem><TitleText>Education</TitleText><InforText>대구소프트웨어 마이스터고등학교 재학중</InforText></MenuItem>
-                                <MenuItem><TitleText>Phone</TitleText><InforText>010-5567-7966</InforText></MenuItem>
-                                <MenuItem><TitleText>E-mail</TitleText><InforText>daesung09854@gmail.com</InforText></MenuItem>
+                                <MenuItem><TitleText>Age</TitleText><InforText>{`${this.state.profile.age}`}</InforText></MenuItem>
+                                <MenuItem><TitleText>Education</TitleText><InforText>{`${this.state.profile.education}`}</InforText></MenuItem>
+                                <MenuItem><TitleText>Phone</TitleText><InforText>{`${this.state.profile.phone}`}</InforText></MenuItem>
+                                <MenuItem><TitleText>E-mail</TitleText><InforText>{`${this.state.profile.email}`}</InforText></MenuItem>
                             </ul>
                         </Right_Box>
                     </Top_Box>
                     <Bottom_Box>
-                        <a href = "https://www.facebook.com/profile.php?id=100011438942893" target = "_blank">
+                        <a href = {`${this.state.profile.facebook}`} target = "_blank" rel = "noopener noreferrer">
                             <IconButton>
                                 <FontAwesomeIcon icon = {faFacebook} style = {{color : "white"}} />
                             </IconButton>
                         </a>
 
-                        <a href = "https://github.com/Daeseong7966" target = "_blank">
+                        <a href = {`${this.state.profile.github}`} target = "_blank" rel = "noopener noreferrer">
                             <IconButton>
                                 <FontAwesomeIcon icon = {faGithub} style = {{color : "white"}} />
                             </IconButton>
                         </a>
 
-                        <a href = "https://www.rocketpunch.com/@daesung09854" target = "_blank">
+                        <a href = {`${this.state.profile.rocket}`} target = "_blank" rel = "noopener noreferrer">
                             <IconButton>
                                 <FontAwesomeIcon icon={faRocket} style = {{color : "white"}} />
                             </IconButton>
                         </a>
 
-                        <a href = "https://bigstar-vlog.tistory.com/" target = "_blank">
+                        <a href = {`${this.state.profile.blog}`} target = "_blank" rel = "noopener noreferrer">
                             <IconButton>
                                 <FontAwesomeIcon icon = {faBold} style = {{color : "white"}} />
                             </IconButton>

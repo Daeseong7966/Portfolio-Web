@@ -1,21 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
 
-.MenuItem{
+.MenuItem{  
     height : 3.5rem;
-    width : 20vw;
-    background-color : #343a40;
+    width : 10vw;
     border : none;
     cursor: pointer;
     outline : none;
-    color : white;
-    font-family : 'Roboto Slab', serif;
+    color : black;
+    font-family : 'Bebas Neue', serif;
     font-size : 2rem;
+    background-color : white;
 }
 
 .MenuItem:hover{
-    background-color : #495057;
-}
-
-.MenuItem:active{
-    background-color : #1862ab;
+    border-bottom : 3px solid black;
 }

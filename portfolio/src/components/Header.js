@@ -5,21 +5,23 @@ import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 
 const Logo = styled.div`
-    @import url('https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap');
+    @import url('https://fonts.googleapis.com/css?family=Bebas+Neue&display=swap');
     height : 3.5rem;
     width : 100vw;
-    background-color : #212529;
-    color : white;
+    color : black;
     text-align : center;
-    font-family : 'Roboto Slab', serif;
-    font-size : 2rem;
+    font-family : 'Bebas Neue', serif;
+    font-size : 2.5rem;
     line-height : 3.5rem;
+    margin-top : 1rem;
 `;
 
 const Menu = styled.div`
+    margin-top : 1.5rem;
     width : 100vw;
     height : 3.5rem;
-    background-color : #343a40;
+    display : flex;
+    justify-content : center;
 `;
 
 const Header = () => {

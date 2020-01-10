@@ -1,13 +1,12 @@
 import React from 'react';
 
-const Activities = () => {
-    return (
-        <div>
-            <h2>
-                활동
-            </h2>
-        </div>
-    );
-};
+class Activities extends React.Component{
+    render(){
+        return(
+            <h1>ad</h1>
+        );
+    }
+    
+}
 
 export default Activities;
